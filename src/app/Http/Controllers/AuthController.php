@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -12,6 +13,23 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    public function registration(RegistrationRequest $request): JsonResource
+    {
+        $data = $request->validated();
+
+        $user = User::create([
+            'locale' => $data['locale'] ?? 'en',
+            'tz' => $data['tz'] ?? 'UTC',
+            'username' => $data['username'],
+            'email' => $data['email'],
+            'password' => $data['password'],
+        ]);
+
+        return new JsonResource([
+            'token' => $user->createToken('api')->accessToken,
+        ]);
+    }
+
     public function login(LoginRequest $request): Response|JsonResource
     {
         $user = User::firstWhere(['email' => $request->validated('email')]);

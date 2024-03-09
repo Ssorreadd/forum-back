@@ -9,7 +9,6 @@ use App\Http\Requests\SearchRequest;
 use App\Http\Resources\Post\PostRawResource;
 use App\Http\Resources\Post\PostResource;
 use App\Models\Post\Post;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
@@ -18,16 +17,17 @@ class PostController extends Controller
 {
     public function index(SearchRequest $request): AnonymousResourceCollection
     {
+        $posts = Post::query();
+
+        if ($request->has('user_id')) {
+            $posts->where('user_id', $request->user_id);
+        }
+
         return PostResource::collection(
-            Post::with(['category', 'user'])
+            $posts->with(['category', 'user'])
                 ->orderBy($request->search_by ?? 'views', $request->order_type ?? 'desc')
                 ->cursorPaginate(CursorsEnum::POST->value)
         );
-    }
-
-    public function userPosts(User $user)
-    {
-
     }
 
     public function view(Request $request, Post $post): PostRawResource

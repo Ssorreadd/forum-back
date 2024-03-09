@@ -2,6 +2,7 @@
 
 return [
     'email' => 'Email: ',
+    'username' => 'Имя пользователя: ',
     'locale' => 'Локализация: ',
     'password' => 'Пароль: ',
     'operator_id' => 'Пользователь ID: ',
