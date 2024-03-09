@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('u_users', function (Blueprint $table) {
+        Schema::create('post_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('locale')->default('en');
-            $table->string('tz')->default('UTC');
-            $table->string('username')->unique();
-            $table->string('photo_filename')->nullable();
-            $table->string('email')->unique();
-            $table->string('password');
+            $table->json('title');
             $table->timestamps();
         });
     }
@@ -28,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('u_users');
+        Schema::dropIfExists('post_categories');
     }
 };
