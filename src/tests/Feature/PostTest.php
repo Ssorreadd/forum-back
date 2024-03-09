@@ -16,11 +16,16 @@ class PostTest extends TestCase
     public function test_can_unauthorized_user_get_posts(): void
     {
         PostCategory::factory()->create();
+
+        User::factory(10)->create();
+
+        Post::factory(8)->create();
+
         Post::factory()->create([
             'user_id' => User::factory()->create()->id,
         ]);
 
-        $response = $this->get('/api/posts/');
+        $response = $this->get('/api/posts');
 
         $response->assertJsonStructure([
             'data' => [

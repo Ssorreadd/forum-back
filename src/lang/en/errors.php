@@ -1,21 +1,41 @@
 <?php
 
 return [
-    'email' => 'Field must be a valid email address',
     'empty' => 'Required field',
     'exist' => 'Field value is invalid',
     'login' => 'Incorrect password or email entered, please try again',
+    'special_symbols' => 'The field must not contain special characters or whitespace',
+    'alpha' => 'The field can only contain letters',
+    'lowercase' => 'The field must be in lowercase',
     'unique' => 'Is already in use',
+    'email' => 'Field must be a valid email address',
+    'mimes' => 'The file must have one of the extensions: :values',
+    'date' => 'Field must be a valid date',
+    'latin' => 'The field must contain characters of the Latin alphabet only',
+    'not_same' => 'The field values do not match',
+    'not_different' => 'The field values must not be the same',
     'max' => [
         'line' => 'The field must be no more than :max characters',
+        'num' => 'The field value must not be greater than :max',
+        'array' => 'The field must not have more than :max items.',
+        'file' => 'The file must not be greater than :max MB.',
     ],
     'min' => [
         'line' => 'The field must not be less than :min characters',
+        'num' => 'The field value must not be less than :min',
+        'array' => 'The field must have at least :min items.',
+        'file' => 'The file must be at least :min MB.',
+    ],
+    'condition' => [
+        'letters' => 'The field must contain at least one letter',
+        'mixed' => 'The field must contain at least one uppercase letter and one lowercase letter',
+        'numbers' => 'The field must contain at least one number',
+        'symbols' => 'The field must contain at least one symbol',
+        'uncompromised' => 'The specified field has appeared in a data breach. Please enter a different value',
     ],
     'types' => [
         'string' => 'Field must be a string',
         'int' => 'Field must be an integer value',
-        'date' => 'Field must be a date',
     ],
     'status' => [
         '400' => 'Bad Request',
