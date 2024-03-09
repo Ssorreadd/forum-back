@@ -34,7 +34,7 @@ services:
     ports:
       - "8889:5432"
     volumes:
-      - forum_db:/var/lib/postgres
+      - forum_db:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: forum
       POSTGRES_USER: user
