@@ -22,8 +22,8 @@ class SearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'search_by' => ['nullable', 'string'],
-            'order_type' => ['nullable', 'string'],
+            'search_by' => ['nullable'],
+            'order_type' => ['nullable'],
             'username' => ['nullable', 'string', 'exists:u_users,username'],
             'category_id' => ['nullable', 'integer', 'exists:blogs_categories,id'],
         ];
