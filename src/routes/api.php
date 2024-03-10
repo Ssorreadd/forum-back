@@ -4,6 +4,7 @@ use App\Enums\RouteMiddlewareEnum;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Blog\BlogCategoryController;
 use App\Http\Controllers\Blog\BlogController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(AuthController::class)->prefix('auth')->group(function () {
@@ -18,6 +19,10 @@ Route::controller(AuthController::class)->prefix('auth')->group(function () {
 });
 
 Route::middleware(RouteMiddlewareEnum::STANDARD->value)->group(function () {
+    Route::controller(UserController::class)->prefix('users')->group(function () {
+        Route::get('', 'index')->withoutMiddleware(RouteMiddlewareEnum::STANDARD->value);
+        Route::get('im', 'im');
+    });
     Route::controller(BlogController::class)->prefix('blogs')->group(function () {
         Route::withoutMiddleware(RouteMiddlewareEnum::STANDARD->value)->group(function () {
             Route::get('', 'index');
