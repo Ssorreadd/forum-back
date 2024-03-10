@@ -22,7 +22,7 @@ class BlogResource extends JsonResource
             'user' => $this->whenLoaded('user', fn () => UserResource::make($this->user)),
             'category' => $this->whenLoaded('category', fn () => BlogCategoryResource::make($this->category)),
             'views' => $this->views,
-            'created_at' => $this->created_at->setTimezone('+3')->format('H:i:s d.m.Y'),
+            'created_at' => $this->created_at->setTimezone('+3')->format('H:i d.m.Y'),
         ];
     }
 }
