@@ -9,6 +9,7 @@ use App\Http\Requests\SearchRequest;
 use App\Http\Resources\Blog\BlogRawResource;
 use App\Http\Resources\Blog\BlogResource;
 use App\Models\Blog\Blog;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
@@ -19,8 +20,15 @@ class BlogController extends Controller
     {
         $blogs = Blog::query();
 
-        if ($request->has('user_id')) {
-            $blogs->where('user_id', $request->user_id);
+        if ($request->has('username')) {
+            $user = User::where('username', $request->username)->first();
+            if ($user) {
+                $blogs->where('user_id', $user->id);
+            }
+        }
+
+        if ($request->has('category_id')) {
+            $blogs->where('category_id', $request->category_id);
         }
 
         return BlogResource::collection(
@@ -41,7 +49,7 @@ class BlogController extends Controller
         return BlogRawResource::make($blog->load(['category', 'user']));
     }
 
-    public function myPosts(Request $request)
+    public function myBlogs(Request $request)
     {
         return BlogRawResource::collection(
             $request->user()->posts()

@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class UserResource extends JsonResource
+class MyInfoResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,7 +18,7 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'username' => $this->username,
             'locale' => $this->locale,
-            'photo_filename' => $this->photo_filename,
+            'tz' => $this->tz,
             'created_at' => $this->created_at->setTimezone('+3')->format('H:i d.m.Y'),
         ];
     }

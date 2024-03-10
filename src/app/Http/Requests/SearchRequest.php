@@ -24,7 +24,8 @@ class SearchRequest extends FormRequest
         return [
             'search_by' => ['nullable', 'string'],
             'order_type' => ['nullable', 'string'],
-            'user_id' => ['nullable', 'integer', 'exists:u_users,id'],
+            'username' => ['nullable', 'string', 'exists:u_users,username'],
+            'category_id' => ['nullable', 'integer', 'exists:blogs_categories,id'],
         ];
     }
 }
