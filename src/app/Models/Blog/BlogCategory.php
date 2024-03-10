@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models\Post;
+namespace App\Models\Blog;
 
 use App\Models\BaseTranslatableModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class PostCategory extends BaseTranslatableModel
+class BlogCategory extends BaseTranslatableModel
 {
     use HasFactory;
 
@@ -16,8 +16,8 @@ class PostCategory extends BaseTranslatableModel
         'updated_at',
     ];
 
-    public function posts(): HasMany
+    public function blogs(): HasMany
     {
-        return $this->hasMany(Post::class, 'category_id');
+        return $this->hasMany(Blog::class, 'category_id');
     }
 }

@@ -1,15 +1,15 @@
 <?php
 
-namespace Database\Factories\Post;
+namespace Database\Factories\Blog;
 
-use App\Models\Post\PostCategory;
+use App\Models\Blog\BlogCategory;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post\Post>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Blog\Blog>
  */
-class PostFactory extends Factory
+class BlogFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,7 +20,7 @@ class PostFactory extends Factory
     {
         return [
             'user_id' => User::all()->random()->id,
-            'category_id' => PostCategory::all()->random()->id,
+            'category_id' => BlogCategory::all()->random()->id,
             'title' => fake()->title,
             'content' => fake()->realTextBetween(225, 500),
             'views' => fake()->numberBetween('100', '10000'),

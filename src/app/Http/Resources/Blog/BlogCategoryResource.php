@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Post;
+namespace App\Http\Resources\Blog;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PostCategoryResource extends JsonResource
+class BlogCategoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

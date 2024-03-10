@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Post;
+namespace App\Http\Resources\Blog;
 
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PostRawResource extends JsonResource
+class BlogRawResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,10 +20,10 @@ class PostRawResource extends JsonResource
             'title' => $this->title,
             'content' => $this->content,
             'user' => $this->whenLoaded('user', fn () => UserResource::make($this->user)),
-            'category' => $this->whenLoaded('category', fn () => PostCategoryResource::make($this->category)),
+            'category' => $this->whenLoaded('category', fn () => BlogCategoryResource::make($this->category)),
             'views' => $this->views,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'created_at' => $this->created_at->setTimezone('+3')->format('H:i:s d.m.Y'),
+            'updated_at' => $this->updated_at->setTimezone('+3')->format('H:i:s d.m.Y'),
         ];
     }
 }

@@ -2,8 +2,8 @@
 
 use App\Enums\RouteMiddlewareEnum;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Post\PostCategoryController;
-use App\Http\Controllers\Post\PostController;
+use App\Http\Controllers\Blog\BlogCategoryController;
+use App\Http\Controllers\Blog\BlogController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(AuthController::class)->prefix('auth')->group(function () {
@@ -18,18 +18,18 @@ Route::controller(AuthController::class)->prefix('auth')->group(function () {
 });
 
 Route::middleware(RouteMiddlewareEnum::STANDARD->value)->group(function () {
-    Route::controller(PostController::class)->prefix('posts')->group(function () {
+    Route::controller(BlogController::class)->prefix('blogs')->group(function () {
         Route::withoutMiddleware(RouteMiddlewareEnum::STANDARD->value)->group(function () {
             Route::get('', 'index');
-            Route::get('{user}', 'userPosts');
-            Route::get('{post}/view', 'view');
+            Route::get('{user}', 'userBlogs');
+            Route::get('{blog}/view', 'view');
         });
 
-        Route::get('my-posts', 'myPosts');
+        Route::get('my-blogs', 'myBlogs');
         Route::post('create', 'store');
     });
 
-    Route::controller(PostCategoryController::class)->prefix('categories')->group(function () {
+    Route::controller(BlogCategoryController::class)->prefix('categories')->group(function () {
         Route::get('', 'index')->withoutMiddleware(RouteMiddlewareEnum::STANDARD->value);
     });
 });
