@@ -1,57 +1,57 @@
 <?php
 
-namespace App\Http\Controllers\Post;
+namespace App\Http\Controllers\Blog;
 
 use App\Enums\CursorsEnum;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Post\StorePostRequest;
+use App\Http\Requests\Blog\StoreBlogRequest;
 use App\Http\Requests\SearchRequest;
-use App\Http\Resources\Post\PostRawResource;
-use App\Http\Resources\Post\PostResource;
-use App\Models\Post\Post;
+use App\Http\Resources\Blog\BlogRawResource;
+use App\Http\Resources\Blog\BlogResource;
+use App\Models\Blog\Blog;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 
-class PostController extends Controller
+class BlogController extends Controller
 {
     public function index(SearchRequest $request): AnonymousResourceCollection
     {
-        $posts = Post::query();
+        $blogs = Blog::query();
 
         if ($request->has('user_id')) {
-            $posts->where('user_id', $request->user_id);
+            $blogs->where('user_id', $request->user_id);
         }
 
-        return PostResource::collection(
-            $posts->with(['category', 'user'])
+        return BlogResource::collection(
+            $blogs->with(['category', 'user'])
                 ->orderBy($request->search_by ?? 'views', $request->order_type ?? 'desc')
                 ->cursorPaginate(CursorsEnum::POST->value)
         );
     }
 
-    public function view(Request $request, Post $post): PostRawResource
+    public function view(Request $request, Blog $blog): BlogRawResource
     {
         $user = $request->user();
 
-        if (($user && $post->user_id != $user->id) || empty($user)) {
-            $post->increment('views');
+        if (($user && $blog->user_id != $user->id) || empty($user)) {
+            $blog->increment('views');
         }
 
-        return PostRawResource::make($post->load(['category', 'user']));
+        return BlogRawResource::make($blog->load(['category', 'user']));
     }
 
     public function myPosts(Request $request)
     {
-        return PostRawResource::collection(
+        return BlogRawResource::collection(
             $request->user()->posts()
                 ->with(['category'])->get()
         );
     }
 
-    public function store(StorePostRequest $request): Response
+    public function store(StoreBlogRequest $request): Response
     {
-        Post::create([
+        Blog::create([
             'title' => $request->validated('title'),
             'content' => $request->validated('content'),
             'user_id' => $request->user()->id,

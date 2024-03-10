@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Models\Post;
+namespace App\Models\Blog;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Post extends Model
+class Blog extends Model
 {
     use HasFactory;
 
@@ -19,7 +19,7 @@ class Post extends Model
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(PostCategory::class, 'category_id');
+        return $this->belongsTo(BlogCategory::class, 'category_id');
     }
 
     public function user(): BelongsTo

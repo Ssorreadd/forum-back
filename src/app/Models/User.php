@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Post\Post;
+use App\Models\Blog\Blog;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -29,8 +29,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function posts(): HasMany
+    public function blogs(): HasMany
     {
-        return $this->hasMany(Post::class, 'user_id');
+        return $this->hasMany(Blog::class, 'user_id');
     }
 }

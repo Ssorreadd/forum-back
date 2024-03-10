@@ -2,30 +2,30 @@
 
 namespace Tests\Feature;
 
-use App\Models\Post\Post;
-use App\Models\Post\PostCategory;
+use App\Models\Blog\Blog;
+use App\Models\Blog\BlogCategory;
 use App\Models\User;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
-class PostTest extends TestCase
+class BlogTest extends TestCase
 {
     /**
      * A basic feature test example.
      */
-    public function test_can_unauthorized_user_get_posts(): void
+    public function test_can_unauthorized_user_get_blogs(): void
     {
-        PostCategory::factory()->create();
+        BlogCategory::factory()->create();
 
         User::factory(10)->create();
 
-        Post::factory(8)->create();
+        Blog::factory(8)->create();
 
-        Post::factory()->create([
+        Blog::factory()->create([
             'user_id' => User::factory()->create()->id,
         ]);
 
-        $response = $this->get('/api/posts');
+        $response = $this->get('/api/blogs');
 
         $response->assertJsonStructure([
             'data' => [
@@ -50,16 +50,16 @@ class PostTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_can_authorized_user_get_posts(): void
+    public function test_can_authorized_user_get_blogs(): void
     {
-        PostCategory::factory()->create();
-        Post::factory()->create([
+        BlogCategory::factory()->create();
+        Blog::factory()->create([
             'user_id' => User::factory()->create()->id,
         ]);
 
         Passport::actingAs(User::factory()->create());
 
-        $response = $this->get('/api/posts/');
+        $response = $this->get('/api/blogs/');
 
         $response->assertJsonStructure([
             'data' => [
@@ -84,16 +84,16 @@ class PostTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_can_unauthorized_user_view_post(): void
+    public function test_can_unauthorized_user_view_blog(): void
     {
-        PostCategory::factory()->create();
+        BlogCategory::factory()->create();
 
-        $post = Post::factory()->create([
+        $blog = Blog::factory()->create([
             'user_id' => User::factory()->create()->id,
             'views' => 0,
         ]);
 
-        $response = $this->get('/api/posts/'.$post->id.'/view');
+        $response = $this->get('/api/blogs/'.$blog->id.'/view');
 
         $response->assertJsonStructure([
             'data' => [
@@ -117,20 +117,20 @@ class PostTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_can_authorized_user_view_post(): void
+    public function test_can_authorized_user_view_blog(): void
     {
-        PostCategory::factory()->create();
+        BlogCategory::factory()->create();
 
         $user = User::factory()->create();
 
         Passport::actingAs($user);
 
-        $post = Post::factory()->create([
+        $blog = Blog::factory()->create([
             'user_id' => $user->id,
             'views' => 0,
         ]);
 
-        $response = $this->get('/api/posts/'.$post->id.'/view');
+        $response = $this->get('/api/blogs/'.$blog->id.'/view');
 
         $response->assertJsonStructure([
             'data' => [
@@ -154,13 +154,13 @@ class PostTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_can_user_store_post(): void
+    public function test_can_user_store_blog(): void
     {
-        $category = PostCategory::factory()->create();
+        $category = BlogCategory::factory()->create();
 
         Passport::actingAs(User::factory()->create());
 
-        $response = $this->post('/api/posts/create', [
+        $response = $this->post('/api/blogs/create', [
             'title' => fake()->title,
             'content' => fake()->randomHtml,
             'category_id' => $category->id,

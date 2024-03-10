@@ -2,16 +2,16 @@
 
 namespace Tests\Feature;
 
-use App\Models\Post\PostCategory;
+use App\Models\Blog\BlogCategory;
 use App\Models\User;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
-class PostCategoryTest extends TestCase
+class BlogCategoryTest extends TestCase
 {
     public function test_can_authorized_user_get_categories(): void
     {
-        PostCategory::factory(10)->create();
+        BlogCategory::factory(10)->create();
 
         Passport::actingAs(User::factory()->create());
 
@@ -31,7 +31,7 @@ class PostCategoryTest extends TestCase
 
     public function test_can_unauthorized_user_get_categories(): void
     {
-        PostCategory::factory(10)->create();
+        BlogCategory::factory(10)->create();
 
         $response = $this->get('/api/categories/');
 

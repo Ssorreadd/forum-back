@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Post;
+namespace App\Http\Requests\Blog;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class StorePostRequest extends FormRequest
+class StoreBlogRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,7 @@ class StorePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id' => ['required', 'exists:post_categories,id'],
+            'category_id' => ['required', 'exists:blog_categories,id'],
             'title' => ['required', 'string', 'max:255'],
             'content' => ['string', 'max:65535'],
         ];
